@@ -1,5 +1,7 @@
 import re
-import nltk
+import spacy
+
+nlp = spacy.load('en')
 
 def load_file(filename="input.txt"):
     """ loads a text file into a string
@@ -52,11 +54,26 @@ def lengthy_structured_tokenization(text):
     :return: Ordered rank 2 tensor: Outer array represents paragraphs. Inner array are sentences of the paragraph.
     """
     output = []
-    ttt = nltk.tokenize.TextTilingTokenizer()
-    paragraphs = ttt.tokenize(text)
+    paragraphs = tokenize_passage(text)
 
     for paragraph in paragraphs:
-        sentences = nltk.sent_tokenize(paragraph)
+        doc = nlp(paragraph)
+        sentences = [sent.string.strip() for sent in doc.sents]
         output.append(sentences)
 
     return output
+
+def tokenize_passage(text):
+    """ Tokenizes a passage by paragraph
+    
+    :param text: passage
+    :return: array of paragraphs
+    """
+    output = []
+    for s in text.splitlines():
+        paragraph = s.strip()
+        if (len(paragraph) > 0):
+            output.append(paragraph)
+    return output
+
+print(lengthy_structured_tokenization(load_file('input.txt')))

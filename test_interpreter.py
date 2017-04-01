@@ -35,4 +35,4 @@ def test_paragraph_tokenization():
     # Assert sentence tokenization
     assert (len(paragraphs[0]) == 3)
     assert (len(paragraphs[1]) == 1)
-    assert (len(paragraphs[2]) == 5)
+    assert (len(paragraphs[2]) == 6)
