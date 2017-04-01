@@ -1,3 +1,4 @@
+import graphviz as gv
 import nltk
 from nltk.parse.stanford import StanfordDependencyParser as sdp
 
@@ -103,3 +104,26 @@ def get_dependency_graph(text):
     results = dependency_parser.raw_parse(text)
     dependency_graph = results.__next__()
     return dependency_graph
+
+
+def print_dependency_graph(dependency_graph, output_folder="out/"):
+    """ render a dependency graph using GraphVis
+    
+    :param dependency_graph: nltk dependency graph
+    :param output_folder: path to output files
+    :return: 
+    """
+    src = gv.Source(dependency_graph.to_dot())
+    src.render(output_folder + sentence_from_graph(dependency_graph), view=True)
+
+
+def sentence_from_graph(dependency_graph):
+    """ get original sentence from a dependency graph
+    
+    :param dependency_graph: nltk dependency graph
+    :return: original English sentence
+    """
+    words = [dependency_graph.get_by_address(i)['word']
+             for i in sorted(dependency_graph.nodes)
+             if dependency_graph.get_by_address(i)['word'] is not None]
+    return " ".join(words)
