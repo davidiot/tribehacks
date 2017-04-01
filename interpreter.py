@@ -7,6 +7,9 @@ dependency_parser = sdp(
     path_to_models_jar="stanford-corenlp-full-2016-10-31/stanford-corenlp-3.7.0-models.jar"
 )
 
+## Constants
+VERB = ['VB', 'VBP']
+NOUN = ['NN', 'NNS', 'VBG']
 
 def load_file(filename="input.txt"):
     """ loads a text file into a string
@@ -155,3 +158,76 @@ def sentence_from_graph(dependency_graph):
              for i in sorted(dependency_graph.nodes)
              if dependency_graph.get_by_address(i)['word'] is not None]
     return " ".join(words)
+
+def get_right_text_section(dg, node):
+    start_index = node['address']
+    end_index = find_max_node_index(dg, node)
+
+    output = ""
+    for n in range(start_index, end_index + 1):
+        word = dg.get_by_address(n)['word']
+        if word:
+            output += " " + word
+
+    return output.strip()
+
+def get_object_text_section(dg, node):
+    start_index = node['address']
+    end_index = find_max_node_index(dg, node)
+
+    output = []
+    current_verb = node if (node['tag'] in VERB) else dg.nodes[find_next_verb_index(dg, node, end_index)]
+
+    while (current_verb['address'] and current_verb['address'] <= end_index):
+        verb_phrase = current_verb['word']
+
+        next_v_index = find_next_verb_index(dg, current_verb, end_index)
+
+        output_length_before_parse = len(output)
+
+        for n in range(current_verb['address'] + 1, next_v_index):
+            nn = dg.nodes[n]
+            word = nn['word']
+            tag = nn['tag']
+
+            if word and tag in NOUN:
+                output.append(verb_phrase + " " + word)
+
+        output_length_after_parse = len(output)
+        if output_length_before_parse == output_length_after_parse:
+            output.append(verb_phrase)
+
+        current_verb = dg.nodes[next_v_index]
+
+    return output
+
+def find_max_node_index(dg, node):
+    children = node['deps']
+    children_addresses = []
+    for key, value in children.items():
+        children_addresses.extend(value)
+
+    max_val = node['address']
+    for address in children_addresses:
+        max_child_value = find_max_node_index(dg, dg.nodes[address])
+        if max_child_value > max_val:
+            max_val = max_child_value
+
+    return max_val
+
+def find_next_verb_index(dg, node, max_index):
+    start_index = node['address']
+    end_index = max_index
+
+    for n in range(start_index + 1, end_index):
+        if dg.get_by_address(n)['tag'] in VERB:
+            return n
+
+    return end_index + 1
+
+g = get_dependency_graph(load_file('input2.txt'))
+cr = g.nodes[0]
+# max_val = find_max_node_index(g, cr)
+# next_verb_index = find_next_verb_index(g, cr)
+# print(next_verb_index)
+print(get_object_text_section(g, cr))

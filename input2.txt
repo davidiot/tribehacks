@@ -1,1 +1,1 @@
-The goal is to study how nonprogrammers reason about programming concepts, then create one or more programs or applications that apply these findings.
+The Natural Programming Project will study ways to make learning how to program significantly easier.

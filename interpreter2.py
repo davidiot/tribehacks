@@ -1,8 +1,6 @@
 import interpreter as interp
 import spacy
 import spacy.symbols as sym
-from textpipeliner import PipelineEngine
-from textpipeliner.pipes import *
 
 nlp = spacy.load('en')
 
@@ -17,20 +15,20 @@ def spacy_tokenization(text):
         return output
 
 tokenized_vals = spacy_tokenization(interp.load_file('input2.txt'))
-print(tokenized_vals)
-
 doc = nlp(tokenized_vals[0][0])
+print(doc)
 
-pipes_structure = [SequencePipe([FindTokensPipe("VERB/nsubj/NNP"),
-                                 NamedEntityFilterPipe(),
-                                 NamedEntityExtractorPipe()]),
-                       AggregatePipe([FindTokensPipe("VERB"),
-                                      FindTokensPipe("VERB/xcomp/VERB/aux/*"),
-                                      FindTokensPipe("VERB/xcomp/VERB")]),
-                       AnyPipe([FindTokensPipe("VERB/[acomp,amod]/ADJ"),
-                                AggregatePipe([FindTokensPipe("VERB/[dobj,attr]/NOUN/det/DET"),
-                                               FindTokensPipe("VERB/[dobj,attr]/NOUN/[acomp,amod]/ADJ")])])
-                      ]
+verbs = set()
+for possible_verb in doc:
+    if possible_verb.pos == sym.VERB:
+        # s = ""
+        # for c in possible_verb.subtree:
+        #     s += c.text + "---"
+        # print(s)
 
-engine = PipelineEngine(pipes_structure, doc, [0,1,2])
-engine.process()
+        span = doc[possible_verb.i : possible_verb.right_edge.i + 1]
+        # print(span[0])
+
+        print(possible_verb.text, possible_verb.lemma, possible_verb.lemma_, possible_verb.tag, possible_verb.tag_, possible_verb.pos, possible_verb.pos_)
+
+        verbs.add(possible_verb)
