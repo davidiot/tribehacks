@@ -2,35 +2,51 @@ digraph G{
 edge [dir=forward]
 node [shape=oval]
 
-0 [label="0 (None)"]
+0 [label="0 None
+(TOP)"]
 0 -> 6 [label="root"]
-1 [label="1 (The)"]
-2 [label="2 (Natural)"]
-3 [label="3 (Programming)"]
-4 [label="4 (Project)"]
+1 [label="1 The
+(DT)"]
+2 [label="2 Natural
+(NNP)"]
+3 [label="3 Programming
+(NNP)"]
+4 [label="4 Project
+(NNP)"]
 4 -> 1 [label="det"]
 4 -> 2 [label="compound"]
 4 -> 3 [label="compound"]
-5 [label="5 (will)"]
-6 [label="6 (study)"]
+5 [label="5 will
+(MD)"]
+6 [label="6 study
+(VB)"]
 6 -> 4 [label="nsubj"]
 6 -> 5 [label="aux"]
 6 -> 7 [label="dobj"]
 6 -> 9 [label="xcomp"]
-7 [label="7 (ways)"]
-8 [label="8 (to)"]
-9 [label="9 (make)"]
+7 [label="7 ways
+(NNS)"]
+8 [label="8 to
+(TO)"]
+9 [label="9 make
+(VB)"]
 9 -> 8 [label="mark"]
 9 -> 10 [label="xcomp"]
-10 [label="10 (learning)"]
+10 [label="10 learning
+(VBG)"]
 10 -> 13 [label="ccomp"]
-11 [label="11 (how)"]
-12 [label="12 (to)"]
-13 [label="13 (program)"]
+11 [label="11 how
+(WRB)"]
+12 [label="12 to
+(TO)"]
+13 [label="13 program
+(VB)"]
 13 -> 11 [label="advmod"]
 13 -> 12 [label="mark"]
 13 -> 15 [label="xcomp"]
-14 [label="14 (significantly)"]
-15 [label="15 (easier)"]
+14 [label="14 significantly
+(RB)"]
+15 [label="15 easier
+(JJR)"]
 15 -> 14 [label="advmod"]
 }

@@ -113,13 +113,36 @@ def print_dependency_graph(dependency_graph, output_folder="out/"):
     :param output_folder: path to output files
     :return: 
     """
-    src = gv.Source(
-        dependency_graph
-            .to_dot()
-            .replace("node [shape=plaintext]",
-                     "node [shape=oval]")
-    )
+    src = gv.Source(convert_to_dot(dependency_graph))
     src.render(output_folder + sentence_from_graph(dependency_graph), view=True)
+
+
+def convert_to_dot(dependency_graph):
+    """ convert dependency graph to dot format
+        based on the to_dot method 
+        (@link http://www.nltk.org/_modules/nltk/parse/dependencygraph.html#DependencyGraph.to_dot)
+    
+    :param dependency_graph: dependency graph to convert
+    :return: dot graph string
+    """
+
+    # Start the digraph specification
+    s = 'digraph G{\n'
+    s += 'edge [dir=forward]\n'
+    s += 'node [shape=oval]\n'
+
+    # Draw the remaining nodes
+    for node in sorted(dependency_graph.nodes.values(), key=lambda v: v['address']):
+            s += '\n%s [label="%s %s\n(%s)"]' % (node['address'], node['address'], node['word'], node['tag'])
+            for rel, deps in node['deps'].items():
+                for dep in deps:
+                    if rel is not None:
+                        s += '\n%s -> %s [label="%s"]' % (node['address'], dep, rel)
+                    else:
+                        s += '\n%s -> %s ' % (node['address'], dep)
+    s += "\n}"
+
+    return s
 
 
 def sentence_from_graph(dependency_graph):
