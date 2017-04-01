@@ -1,5 +1,10 @@
-import spacy
-nlp = spacy.load('en')
+import nltk
+from nltk.parse.stanford import StanfordDependencyParser as sdp
+
+dependency_parser = sdp(
+    path_to_jar="stanford-corenlp-full-2016-10-31/stanford-corenlp-3.7.0.jar",
+    path_to_models_jar="stanford-corenlp-full-2016-10-31/stanford-corenlp-3.7.0-models.jar"
+)
 
 
 def load_file(filename="input.txt"):
@@ -57,8 +62,7 @@ def lengthy_structured_tokenization(text):
     paragraphs = tokenize_passage(text)
 
     for paragraph in paragraphs:
-        doc = nlp(paragraph)
-        sentences = [sent.string.strip() for sent in doc.sents]
+        sentences = nltk.sent_tokenize(paragraph)
         output.append(sentences)
 
     return output
@@ -76,3 +80,16 @@ def tokenize_passage(text):
         if len(paragraph) > 0:
             output.append(paragraph)
     return output
+
+
+def get_dependency_graphs(tokenized_text):
+    return [
+        [get_dependency_graph(sentence) for sentence in paragraph]
+        for paragraph in tokenized_text
+    ]
+
+
+def get_dependency_graph(text):
+    results = dependency_parser.raw_parse(text)
+    dependency_graph = results.__next__()
+    return dependency_graph
