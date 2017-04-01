@@ -1,4 +1,5 @@
 import re
+import nltk
 
 def load_file(filename="input.txt"):
     """ loads a text file into a string
@@ -41,5 +42,21 @@ def strip_parens(text):
         output += text[index:beginning]
         index = end + 1
     output += text[index:]
+
+    return output
+
+def lengthy_structured_tokenization(text):
+    """ Tokenizes paragraphs and returns paragraphs and their associated sentences
+    
+    :param text: formatted text
+    :return: Ordered rank 2 tensor: Outer array represents paragraphs. Inner array are sentences of the paragraph.
+    """
+    output = []
+    ttt = nltk.tokenize.TextTilingTokenizer()
+    paragraphs = ttt.tokenize(text)
+
+    for paragraph in paragraphs:
+        sentences = nltk.sent_tokenize(paragraph)
+        output.append(sentences)
 
     return output
