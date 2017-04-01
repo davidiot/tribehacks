@@ -1,52 +1,76 @@
 digraph G{
 edge [dir=forward]
-node [shape=plaintext]
+node [shape=oval]
 
-0 [label="0 (None)"]
+0 [label="0 None
+(TOP)"]
 0 -> 3 [label="root"]
-1 [label="1 (The)"]
-2 [label="2 (goal)"]
+1 [label="1 The
+(DT)"]
+2 [label="2 goal
+(NN)"]
 2 -> 1 [label="det"]
-3 [label="3 (is)"]
+3 [label="3 is
+(VBZ)"]
 3 -> 2 [label="nsubj"]
 3 -> 5 [label="xcomp"]
-4 [label="4 (to)"]
-5 [label="5 (study)"]
+4 [label="4 to
+(TO)"]
+5 [label="5 study
+(VB)"]
 5 -> 4 [label="mark"]
 5 -> 7 [label="ccomp"]
 5 -> 14 [label="dep"]
-6 [label="6 (how)"]
-7 [label="7 (nonprogrammers)"]
+6 [label="6 how
+(WRB)"]
+7 [label="7 nonprogrammers
+(VBZ)"]
 7 -> 6 [label="advmod"]
 7 -> 8 [label="dobj"]
-8 [label="8 (reason)"]
+8 [label="8 reason
+(NN)"]
 8 -> 11 [label="nmod"]
-9 [label="9 (about)"]
-10 [label="10 (programming)"]
-11 [label="11 (concepts)"]
+9 [label="9 about
+(IN)"]
+10 [label="10 programming
+(VBG)"]
+11 [label="11 concepts
+(NNS)"]
 11 -> 9 [label="case"]
 11 -> 10 [label="amod"]
-13 [label="13 (then)"]
-14 [label="14 (create)"]
+13 [label="13 then
+(RB)"]
+14 [label="14 create
+(VB)"]
 14 -> 13 [label="advmod"]
 14 -> 18 [label="dobj"]
-15 [label="15 (one)"]
+15 [label="15 one
+(CD)"]
 15 -> 16 [label="cc"]
 15 -> 17 [label="conj"]
-16 [label="16 (or)"]
-17 [label="17 (more)"]
-18 [label="18 (programs)"]
+16 [label="16 or
+(CC)"]
+17 [label="17 more
+(JJR)"]
+18 [label="18 programs
+(NNS)"]
 18 -> 15 [label="nummod"]
 18 -> 19 [label="cc"]
 18 -> 20 [label="conj"]
-19 [label="19 (or)"]
-20 [label="20 (applications)"]
+19 [label="19 or
+(CC)"]
+20 [label="20 applications
+(NNS)"]
 20 -> 22 [label="acl:relcl"]
-21 [label="21 (that)"]
-22 [label="22 (apply)"]
+21 [label="21 that
+(WDT)"]
+22 [label="22 apply
+(VBP)"]
 22 -> 21 [label="nsubj"]
 22 -> 24 [label="dobj"]
-23 [label="23 (these)"]
-24 [label="24 (findings)"]
+23 [label="23 these
+(DT)"]
+24 [label="24 findings
+(NNS)"]
 24 -> 23 [label="det"]
 }
