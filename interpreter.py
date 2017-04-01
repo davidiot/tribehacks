@@ -1,6 +1,9 @@
 import graphviz as gv
 import nltk
+import nltk.stem.wordnet as wn
 from nltk.parse.stanford import StanfordDependencyParser as sdp
+
+lemmatizer = wn.WordNetLemmatizer()
 
 dependency_parser = sdp(
     path_to_jar="stanford-corenlp-full-2016-10-31/stanford-corenlp-3.7.0.jar",
@@ -114,7 +117,10 @@ def print_dependency_graph(dependency_graph, output_folder="out/"):
     :return: 
     """
     src = gv.Source(convert_to_dot(dependency_graph))
-    src.render(output_folder + sentence_from_graph(dependency_graph), view=True)
+    sentence = sentence_from_graph(dependency_graph)
+    if len(sentence) > 100:
+        sentence = sentence[:100] + "..."
+    src.render(output_folder + sentence, view=True)
 
 
 def convert_to_dot(dependency_graph):
@@ -155,3 +161,12 @@ def sentence_from_graph(dependency_graph):
              for i in sorted(dependency_graph.nodes)
              if dependency_graph.get_by_address(i)['word'] is not None]
     return " ".join(words)
+
+
+def convert_to_present_tense(verb):
+    """ convert a verb to present tense
+    
+    :param verb: verb in any form
+    :return: present tense of verb
+    """
+    return lemmatizer.lemmatize(verb, 'v')

@@ -31,10 +31,18 @@ def test_strip_right_unbalanced():
 
 
 def test_paragraph_tokenization():
-    paragraphs = interp.lengthy_structured_tokenization(interp.load_file('input.txt'))
+    paragraphs = interp.lengthy_structured_tokenization(interp.load_file('test1'))
     # Assert paragraph tokenization
     assert (len(paragraphs) == 3)
     # Assert sentence tokenization
     assert (len(paragraphs[0]) == 3)
     assert (len(paragraphs[1]) == 1)
     assert (len(paragraphs[2]) == 6)
+
+
+def check_present_tense(verb, baseline):
+    assert(interp.convert_to_present_tense(verb) == baseline)
+
+
+def test_present_tense_ran():
+    check_present_tense("ran", "run")
