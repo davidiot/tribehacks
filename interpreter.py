@@ -1,7 +1,6 @@
-import re
 import spacy
-
 nlp = spacy.load('en')
+
 
 def load_file(filename="input.txt"):
     """ loads a text file into a string
@@ -47,6 +46,7 @@ def strip_parens(text):
 
     return output
 
+
 def lengthy_structured_tokenization(text):
     """ Tokenizes paragraphs and returns paragraphs and their associated sentences
     
@@ -63,6 +63,7 @@ def lengthy_structured_tokenization(text):
 
     return output
 
+
 def tokenize_passage(text):
     """ Tokenizes a passage by paragraph
     
@@ -72,8 +73,6 @@ def tokenize_passage(text):
     output = []
     for s in text.splitlines():
         paragraph = s.strip()
-        if (len(paragraph) > 0):
+        if len(paragraph) > 0:
             output.append(paragraph)
     return output
-
-print(lengthy_structured_tokenization(load_file('input.txt')))
