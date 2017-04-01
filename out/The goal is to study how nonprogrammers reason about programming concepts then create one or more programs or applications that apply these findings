@@ -1,6 +1,6 @@
 digraph G{
 edge [dir=forward]
-node [shape=plaintext]
+node [shape=oval]
 
 0 [label="0 (None)"]
 0 -> 3 [label="root"]

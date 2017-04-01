@@ -113,7 +113,12 @@ def print_dependency_graph(dependency_graph, output_folder="out/"):
     :param output_folder: path to output files
     :return: 
     """
-    src = gv.Source(dependency_graph.to_dot())
+    src = gv.Source(
+        dependency_graph
+            .to_dot()
+            .replace("node [shape=plaintext]",
+                     "node [shape=oval]")
+    )
     src.render(output_folder + sentence_from_graph(dependency_graph), view=True)
 
 
