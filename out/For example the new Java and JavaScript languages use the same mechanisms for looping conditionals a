@@ -1,0 +1,112 @@
+digraph G{
+edge [dir=forward]
+node [shape=oval]
+
+0 [label="0 None
+(TOP)"]
+0 -> 10 [label="root"]
+1 [label="1 For
+(IN)"]
+2 [label="2 example
+(NN)"]
+2 -> 1 [label="case"]
+4 [label="4 the
+(DT)"]
+5 [label="5 new
+(JJ)"]
+6 [label="6 Java
+(NNP)"]
+6 -> 4 [label="det"]
+6 -> 5 [label="amod"]
+6 -> 7 [label="cc"]
+6 -> 9 [label="conj"]
+7 [label="7 and
+(CC)"]
+8 [label="8 JavaScript
+(NNP)"]
+9 [label="9 languages
+(NNS)"]
+9 -> 8 [label="compound"]
+10 [label="10 use
+(VBP)"]
+10 -> 2 [label="nmod"]
+10 -> 6 [label="nsubj"]
+10 -> 13 [label="dobj"]
+11 [label="11 the
+(DT)"]
+12 [label="12 same
+(JJ)"]
+13 [label="13 mechanisms
+(NNS)"]
+13 -> 11 [label="det"]
+13 -> 12 [label="amod"]
+13 -> 15 [label="nmod"]
+13 -> 17 [label="conj"]
+13 -> 20 [label="conj"]
+13 -> 34 [label="conj"]
+13 -> 19 [label="cc"]
+13 -> 32 [label="cc"]
+14 [label="14 for
+(IN)"]
+15 [label="15 looping
+(VBG)"]
+15 -> 14 [label="case"]
+17 [label="17 conditionals
+(NNS)"]
+19 [label="19 and
+(CC)"]
+20 [label="20 assignments
+(NNS)"]
+20 -> 24 [label="acl:relcl"]
+21 [label="21 that
+(WDT)"]
+22 [label="22 have
+(VBP)"]
+23 [label="23 been
+(VBN)"]
+24 [label="24 shown
+(VBN)"]
+24 -> 21 [label="nsubjpass"]
+24 -> 22 [label="aux"]
+24 -> 23 [label="auxpass"]
+24 -> 26 [label="xcomp"]
+25 [label="25 to
+(TO)"]
+26 [label="26 cause
+(VB)"]
+26 -> 25 [label="mark"]
+26 -> 28 [label="dobj"]
+26 -> 31 [label="advcl"]
+27 [label="27 many
+(JJ)"]
+28 [label="28 errors
+(NNS)"]
+28 -> 27 [label="amod"]
+29 [label="29 for
+(IN)"]
+30 [label="30 both
+(DT)"]
+31 [label="31 beginning
+(NN)"]
+31 -> 29 [label="case"]
+31 -> 30 [label="dep"]
+32 [label="32 and
+(CC)"]
+33 [label="33 expert
+(NN)"]
+34 [label="34 programmers
+(NNS)"]
+34 -> 33 [label="compound"]
+34 -> 38 [label="nmod"]
+35 [label="35 in
+(IN)"]
+36 [label="36 the
+(DT)"]
+37 [label="37 C
+(NNP)"]
+38 [label="38 language
+(NN)"]
+38 -> 35 [label="case"]
+38 -> 36 [label="det"]
+38 -> 37 [label="compound"]
+}

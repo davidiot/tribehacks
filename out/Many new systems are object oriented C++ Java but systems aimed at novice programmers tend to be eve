@@ -1,0 +1,103 @@
+digraph G{
+edge [dir=forward]
+node [shape=oval]
+
+0 [label="0 None
+(TOP)"]
+0 -> 6 [label="root"]
+1 [label="1 Many
+(JJ)"]
+2 [label="2 new
+(JJ)"]
+3 [label="3 systems
+(NNS)"]
+3 -> 1 [label="amod"]
+3 -> 2 [label="amod"]
+4 [label="4 are
+(VBP)"]
+5 [label="5 object
+(RB)"]
+6 [label="6 oriented
+(VBN)"]
+6 -> 3 [label="nsubjpass"]
+6 -> 4 [label="auxpass"]
+6 -> 5 [label="advmod"]
+6 -> 8 [label="dep"]
+6 -> 13 [label="cc"]
+6 -> 19 [label="conj"]
+8 [label="8 C++
+(NNP)"]
+8 -> 10 [label="dep"]
+10 [label="10 Java
+(NNP)"]
+13 [label="13 but
+(CC)"]
+14 [label="14 systems
+(NNS)"]
+14 -> 15 [label="acl"]
+15 [label="15 aimed
+(VBN)"]
+15 -> 18 [label="nmod"]
+16 [label="16 at
+(IN)"]
+17 [label="17 novice
+(NN)"]
+18 [label="18 programmers
+(NNS)"]
+18 -> 16 [label="case"]
+18 -> 17 [label="compound"]
+19 [label="19 tend
+(VBP)"]
+19 -> 14 [label="nsubj"]
+19 -> 22 [label="xcomp"]
+19 -> 32 [label="cc"]
+19 -> 38 [label="conj"]
+20 [label="20 to
+(TO)"]
+21 [label="21 be
+(VB)"]
+22 [label="22 event
+(NN)"]
+22 -> 20 [label="mark"]
+22 -> 21 [label="cop"]
+22 -> 23 [label="acl"]
+23 [label="23 based
+(VBN)"]
+23 -> 24 [label="advmod"]
+23 -> 27 [label="dep"]
+24 [label="24 instead
+(RB)"]
+26 [label="26 Visual
+(NNP)"]
+27 [label="27 Basic
+(NNP)"]
+27 -> 26 [label="compound"]
+27 -> 29 [label="dep"]
+29 [label="29 HyperTalk
+(NNP)"]
+32 [label="32 and
+(CC)"]
+33 [label="33 the
+(DT)"]
+34 [label="34 language
+(NN)"]
+35 [label="35 research
+(NN)"]
+36 [label="36 community
+(NN)"]
+36 -> 33 [label="det"]
+36 -> 34 [label="compound"]
+36 -> 35 [label="compound"]
+37 [label="37 is
+(VBZ)"]
+38 [label="38 studying
+(VBG)"]
+38 -> 36 [label="nsubj"]
+38 -> 37 [label="aux"]
+38 -> 40 [label="dobj"]
+39 [label="39 functional
+(JJ)"]
+40 [label="40 styles
+(NNS)"]
+40 -> 39 [label="amod"]
+}

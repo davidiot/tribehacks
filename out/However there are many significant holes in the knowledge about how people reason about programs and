@@ -1,0 +1,58 @@
+digraph G{
+edge [dir=forward]
+node [shape=oval]
+
+0 [label="0 None
+(TOP)"]
+0 -> 4 [label="root"]
+1 [label="1 However
+(RB)"]
+3 [label="3 there
+(EX)"]
+4 [label="4 are
+(VBP)"]
+4 -> 1 [label="advmod"]
+4 -> 3 [label="expl"]
+4 -> 8 [label="nsubj"]
+5 [label="5 many
+(JJ)"]
+6 [label="6 significant
+(JJ)"]
+8 [label="8 holes
+(NNS)"]
+8 -> 5 [label="amod"]
+8 -> 6 [label="amod"]
+8 -> 12 [label="nmod"]
+10 [label="10 in
+(IN)"]
+11 [label="11 the
+(DT)"]
+12 [label="12 knowledge
+(NN)"]
+12 -> 10 [label="case"]
+12 -> 11 [label="det"]
+12 -> 16 [label="acl"]
+13 [label="13 about
+(IN)"]
+14 [label="14 how
+(WRB)"]
+15 [label="15 people
+(NNS)"]
+16 [label="16 reason
+(VB)"]
+16 -> 13 [label="mark"]
+16 -> 14 [label="advmod"]
+16 -> 15 [label="nsubj"]
+16 -> 18 [label="nmod"]
+17 [label="17 about
+(IN)"]
+18 [label="18 programs
+(NNS)"]
+18 -> 17 [label="case"]
+18 -> 19 [label="cc"]
+18 -> 20 [label="conj"]
+19 [label="19 and
+(CC)"]
+20 [label="20 programming
+(NN)"]
+}

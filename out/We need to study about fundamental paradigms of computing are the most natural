@@ -1,0 +1,46 @@
+digraph G{
+edge [dir=forward]
+node [shape=oval]
+
+0 [label="0 None
+(TOP)"]
+0 -> 2 [label="root"]
+1 [label="1 We
+(PRP)"]
+2 [label="2 need
+(VBP)"]
+2 -> 1 [label="nsubj"]
+2 -> 4 [label="xcomp"]
+3 [label="3 to
+(TO)"]
+4 [label="4 study
+(VB)"]
+4 -> 3 [label="mark"]
+4 -> 13 [label="advcl"]
+5 [label="5 about
+(IN)"]
+6 [label="6 fundamental
+(JJ)"]
+7 [label="7 paradigms
+(NNS)"]
+7 -> 6 [label="amod"]
+7 -> 9 [label="nmod"]
+8 [label="8 of
+(IN)"]
+9 [label="9 computing
+(NN)"]
+9 -> 8 [label="case"]
+10 [label="10 are
+(VBP)"]
+11 [label="11 the
+(DT)"]
+12 [label="12 most
+(RBS)"]
+13 [label="13 natural
+(JJ)"]
+13 -> 5 [label="mark"]
+13 -> 7 [label="nsubj"]
+13 -> 10 [label="cop"]
+13 -> 11 [label="det"]
+13 -> 12 [label="advmod"]
+}
