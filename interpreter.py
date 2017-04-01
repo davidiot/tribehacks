@@ -83,6 +83,11 @@ def tokenize_passage(text):
 
 
 def get_dependency_graphs(tokenized_text):
+    """ returns a dependency graph for each sentence in tokenized text
+    
+    :param tokenized_text: tokenized text array
+    :return: array in same format with dependency graphs for each sentence
+    """
     return [
         [get_dependency_graph(sentence) for sentence in paragraph]
         for paragraph in tokenized_text
@@ -90,6 +95,11 @@ def get_dependency_graphs(tokenized_text):
 
 
 def get_dependency_graph(text):
+    """ uses Stanford CoreNLP to compute the dependency graph of a sentence
+    
+    :param text: English sentence (string).
+    :return: nltk dependency graph
+    """
     results = dependency_parser.raw_parse(text)
     dependency_graph = results.__next__()
     return dependency_graph
