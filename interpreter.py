@@ -370,5 +370,5 @@ def generate_noun_csv(p2="app/data/p2.csv", p2i="app/data/p2i.csv", p3="app/data
                     writer.writerow(row)
 
 
-def render_webpage(webpage="app/index.html"):
+def render_webpage(webpage="file:///Users/alex/github/phonics-nlp/app/index.html"):
     webbrowser.open(webpage, new=2)
