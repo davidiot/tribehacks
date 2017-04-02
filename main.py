@@ -35,3 +35,4 @@ else:
     maps = interp.analyze_verbs(graphs)
     interp.generate_p1(maps)
     interp.generate_p2(maps)
+    interp.render_webpage()

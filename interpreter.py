@@ -1,6 +1,7 @@
 import graphviz as gv
 import nltk
 import csv
+import webbrowser
 import nltk.stem.wordnet as wn
 from nltk.parse.stanford import StanfordDependencyParser as sdp
 
@@ -349,3 +350,7 @@ def generate_p2(mappings, file_name="out/p2.csv"):
                     for field in fieldnames
                 }
             )
+
+
+def render_webpage(webpage="app/index.html"):
+    webbrowser.open(webpage, new=2)
