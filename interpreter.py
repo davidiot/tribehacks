@@ -353,5 +353,22 @@ def generate_p2(mappings, file_name="app/data/p2.csv"):
             )
 
 
+def generate_noun_csv(p2="app/data/p2.csv", p2i="app/data/p2i.csv", p3="app/data/p3.csv", nouns="app/data/nouns.txt"):
+    with open(p2) as p2_file:
+        with open(p2i, 'w') as p2i_file:
+            csv.writer(p2i_file, delimiter=',').writerows(zip(*csv.reader(p2_file, delimiter=',')))
+
+    with codecs.open(nouns, "r", "utf-8") as file:
+        noun_list = set(file.read().split(","))
+
+    with open(p2i) as p2i_file:
+        with open(p3, 'w') as p3_file:
+            writer = csv.writer(p3_file, delimiter=',')
+            reader = csv.reader(p2i_file, delimiter=',')
+            for row in reader:
+                if row[0] in noun_list or row[0] == "":
+                    writer.writerow(row)
+
+
 def render_webpage(webpage="app/index.html"):
     webbrowser.open(webpage, new=2)
