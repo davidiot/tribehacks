@@ -41,26 +41,17 @@
     $('#tagsInfo').html('<h1>' + 'Selected Noun: ' + '<b>' + currentRow[0] + '</b>'  + '</h1>')
 
 
-    var xhr = newXMLHttpRequest();
-    xhr.open('HEAD', 'data/' + currentRow[0] + '.PNG', false);
-    xhr.send();
-    if (xhr.status != "404") {
-      thumnail_html = '<div class="thumbnail">';
-        thumbnail_html += '<img src=' + '"' + 'data/' + currentRow[0] + '.PNG' + '"' + '>';
-        thumbnail_html += '<div class="caption">'
-          thumbnail_html += '<h3>' + 'Picture of: ' + currentRow[0] + '</h3>'
-        thumbnail_html += '</div>'
-      thumbnail_html += '</div>'
-    }
-
-    <div class="thumbnail">
-      <img src="..." alt="...">
-      <div class="caption">
-        <h3>Thumbnail label</h3>
-        <p>...</p>
-        <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
-      </div>
-    </div>
+    // var xhr = newXMLHttpRequest();
+    // xhr.open('HEAD', 'data/' + currentRow[0] + '.PNG', false);
+    // xhr.send();
+    // if (xhr.status != "404") {
+    //   thumnail_html = '<div class="thumbnail">';
+    //     thumbnail_html += '<img src=' + '"' + 'data/' + currentRow[0] + '.PNG' + '"' + '>';
+    //     thumbnail_html += '<div class="caption">'
+    //       thumbnail_html += '<h3>' + 'Picture of: ' + currentRow[0] + '</h3>'
+    //     thumbnail_html += '</div>'
+    //   thumbnail_html += '</div>'
+    // }
 
     myChart.update();
     }
@@ -70,7 +61,7 @@
     $.ajax({
       mimeType: 'text/plain; charset=x-user-defined',
       type: "GET",  
-      url: "data/p2.csv",
+      url: "data/p3.csv",
       dataType: "text",       
       success: function(response)  
       {
@@ -84,7 +75,7 @@
       $.ajax({
         mimeType: 'text/plain; charset=x-user-defined',
         type: "GET",  
-        url: "data/p2.csv",
+        url: "data/p3.csv",
         dataType: "text",       
         success: function(response)  
         {
