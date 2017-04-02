@@ -10,9 +10,10 @@ dependency_parser = sdp(
     path_to_models_jar="stanford-corenlp-full-2016-10-31/stanford-corenlp-3.7.0-models.jar"
 )
 
-## Constants
-VERB = ['VB', 'VBP']
-NOUN = ['NN', 'NNS', 'VBG']
+# Constants
+VERB = ['VB', 'VBP', 'VBD', 'VBZ']
+NOUN = ['NN', 'NNS', 'VBG', "NNP", "NNPS"]
+
 
 def load_file(filename="input.txt"):
     """ loads a text file into a string
@@ -167,6 +168,7 @@ def sentence_from_graph(dependency_graph):
 
 
 def get_right_text_section(dg, node):
+
     start_index = node['address']
     end_index = find_max_node_index(dg, node)
 
@@ -178,35 +180,62 @@ def get_right_text_section(dg, node):
 
     return output.strip()
 
-def get_object_text_section(dg, node):
-    start_index = node['address']
-    end_index = find_max_node_index(dg, node)
 
-    output = []
-    current_verb = node if (node['tag'] in VERB) else dg.nodes[find_next_verb_index(dg, node, end_index)]
+def get_object_text_section(dependency_graph, node=None):
+    """ Returns verb-object mapping
+    
+    :param dependency_graph: dependency graph
+    :param node: current node we are visiting
+    :return: map of verb string to array of corresponding objects
+    """
+    if node is None:
+        node = dependency_graph.nodes[0]
 
-    while (current_verb['address'] and current_verb['address'] <= end_index):
+    end_index = find_max_node_index(dependency_graph, node)
+
+    output = {}
+    current_verb = node if (node['tag'] in VERB) else dependency_graph.nodes[find_next_verb_index(dependency_graph, node, end_index)]
+
+    while current_verb['address'] and current_verb['address'] <= end_index:
         verb_phrase = current_verb['word']
 
-        next_v_index = find_next_verb_index(dg, current_verb, end_index)
+        next_v_index = find_next_verb_index(dependency_graph, current_verb, end_index)
 
         output_length_before_parse = len(output)
 
-        for n in range(current_verb['address'] + 1, next_v_index):
-            nn = dg.nodes[n]
-            word = nn['word']
-            tag = nn['tag']
+        compound_nouns = []
+        for i in reversed(range(current_verb['address'] + 1, next_v_index)):
+            possible_object = dependency_graph.nodes[i]
+            word = possible_object['word']
+            if word is not None and i not in compound_nouns:
+                try:
+                    for j in reversed(possible_object['deps']['compound']):
+                        possible_compound_noun = dependency_graph.nodes[j]
+                        if possible_compound_noun['tag'] in NOUN:
+                            word = possible_compound_noun['word'] + " " + word
+                            compound_nouns.append(j)
+                except KeyError:
+                    pass
 
-            if word and tag in NOUN:
-                output.append(verb_phrase + " " + word)
+                if possible_object['tag'] in NOUN:
+                    add_verb(output, verb_phrase, word)
 
         output_length_after_parse = len(output)
         if output_length_before_parse == output_length_after_parse:
-            output.append(verb_phrase)
+            add_verb(output, verb_phrase)
 
-        current_verb = dg.nodes[next_v_index]
+        current_verb = dependency_graph.nodes[next_v_index]
 
     return output
+
+
+def add_verb(verb_map, verb_phrase, object_phrase=None):
+    present_tense_verb = convert_to_present_tense(verb_phrase)
+    if present_tense_verb in verb_map:
+        verb_map[present_tense_verb].append(object_phrase)
+    else:
+        verb_map[present_tense_verb] = [object_phrase]
+
 
 def find_max_node_index(dg, node):
     children = node['deps']
@@ -222,6 +251,7 @@ def find_max_node_index(dg, node):
 
     return max_val
 
+
 def find_next_verb_index(dg, node, max_index):
     start_index = node['address']
     end_index = max_index
@@ -231,13 +261,6 @@ def find_next_verb_index(dg, node, max_index):
             return n
 
     return end_index + 1
-
-g = get_dependency_graph(load_file('input2.txt'))
-cr = g.nodes[0]
-# max_val = find_max_node_index(g, cr)
-# next_verb_index = find_next_verb_index(g, cr)
-# print(next_verb_index)
-print(get_object_text_section(g, cr))
 
 
 def convert_to_present_tense(verb):
