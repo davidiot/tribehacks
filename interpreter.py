@@ -2,6 +2,7 @@ import graphviz as gv
 import nltk
 import csv
 import webbrowser
+import codecs
 import nltk.stem.wordnet as wn
 from nltk.parse.stanford import StanfordDependencyParser as sdp
 
@@ -23,7 +24,7 @@ def load_file(filename="input.txt"):
     :param filename: name of file to read
     :return: string content of file
     """
-    with open(filename, "r") as f:
+    with codecs.open(filename, "r", "utf-8") as f:
         return f.read()
 
 
@@ -232,7 +233,7 @@ def get_object_text_section(dependency_graph, node=None):
 
 
 def add_verb(verb_map, verb_phrase, object_phrase=None):
-    present_tense_verb = convert_to_present_tense(verb_phrase)
+    present_tense_verb = convert_to_present_tense(verb_phrase).lower()
     if present_tense_verb in verb_map:
         verb_map[present_tense_verb].append(object_phrase)
     else:
