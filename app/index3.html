@@ -38,7 +38,29 @@
       } 
     }
 
-    $('#tagsInfo').html('<h1>' + 'Selected Verb: ' + '<b>' + currentRow[0] + '</b>'  + '</h1>')
+    $('#tagsInfo').html('<h1>' + 'Selected Noun: ' + '<b>' + currentRow[0] + '</b>'  + '</h1>')
+
+
+    var xhr = newXMLHttpRequest();
+    xhr.open('HEAD', 'data/' + currentRow[0] + '.PNG', false);
+    xhr.send();
+    if (xhr.status != "404") {
+      thumnail_html = '<div class="thumbnail">';
+        thumbnail_html += '<img src=' + '"' + 'data/' + currentRow[0] + '.PNG' + '"' + '>';
+        thumbnail_html += '<div class="caption">'
+          thumbnail_html += '<h3>' + 'Picture of: ' + currentRow[0] + '</h3>'
+        thumbnail_html += '</div>'
+      thumbnail_html += '</div>'
+    }
+
+    <div class="thumbnail">
+      <img src="..." alt="...">
+      <div class="caption">
+        <h3>Thumbnail label</h3>
+        <p>...</p>
+        <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
+      </div>
+    </div>
 
     myChart.update();
     }
@@ -115,8 +137,8 @@
       
       try {
           TagCanvas.Start('myCanvas','tags',{
-            textColour: '#ff0000',
-            outlineColour: '#ff00ff',
+            textColour: '#228B22',
+            outlineColour: '#000000',
             reverse: true,
             depth: 0.8,
             maxSpeed: 0.05
@@ -135,7 +157,7 @@
 </head>
 
 <body>
-  <h1>Phonics Verb-Object Analysis</h1>
+  <h1>Phonics Photo Analysis</h1>
 
   <div class="container-fluid">
     <div class="row">
@@ -150,21 +172,33 @@
       </div>
 
       <div class="col-md-6">
-        <div id="tagsInfo"></div>
+        <div class="row">
+          <div class="col-md-12">
+            <div id="tagsInfo"></div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-8">
+            <div id="tagsPhoto"></div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-10">
+            <canvas id="myChart" width="300" height="300"></canvas>
+          </div>
+        </div> 
 
 
 
 
-
-
-
-        <canvas id="myChart" width="300" height="300"></canvas>
         <script>
         var ctx = document.getElementById("myChart");
         var myData = {
                 labels: [],
                 datasets: [{
-                    label: '# of Noun Occurrences',
+                    label: '# of Verb Occurrences',
                     data: [],
                     borderWidth: 1
                 }]
