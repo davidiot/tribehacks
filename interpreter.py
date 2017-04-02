@@ -314,7 +314,7 @@ def generate_p1(mappings, file_name="out/p1.csv"):
                         )
 
 
-def generate_p2(mappings, file_name="out/p2.csv"):
+def generate_p2(mappings, file_name="app/data/p2.csv"):
     """ generate csv file that satisfies Part 2 of the requirements
     
     :param mappings: 2D array of verb-object relationships mappings
