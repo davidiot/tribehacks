@@ -23,7 +23,8 @@ parser.add_argument(
 args = parser.parse_args()
 
 if args.nouns:
-    print(args.nouns)
+    interp.generate_noun_csv(nouns=args.nouns)
+    interp.render_webpage(webpage="app/index3.html")
 else:
     text = interp.load_file(args.text)
     stripped_text = interp.strip_parens(text)
