@@ -1,5 +1,6 @@
 import graphviz as gv
 import nltk
+import csv
 import nltk.stem.wordnet as wn
 from nltk.parse.stanford import StanfordDependencyParser as sdp
 
@@ -113,7 +114,7 @@ def get_dependency_graph(text):
     return dependency_graph
 
 
-def print_dependency_graph(dependency_graph, output_folder="out/"):
+def save_dependency_graph(dependency_graph, output_folder="out/", view=False):
     """ render a dependency graph using GraphVis
     
     :param dependency_graph: nltk dependency graph
@@ -124,7 +125,7 @@ def print_dependency_graph(dependency_graph, output_folder="out/"):
     sentence = sentence_from_graph(dependency_graph)
     if len(sentence) > 100:
         sentence = sentence[:100] + "..."
-    src.render(output_folder + sentence, view=True)
+    src.render(output_folder + sentence, view=view)
 
 
 def convert_to_dot(dependency_graph):
@@ -270,3 +271,81 @@ def convert_to_present_tense(verb):
     :return: present tense of verb
     """
     return lemmatizer.lemmatize(verb, 'v')
+
+
+def analyze_verbs(graphs):
+    """ analyzes the verb-object relationships in a graph
+    
+    :param graphs: 2D array of the dependency graphs of the given text
+    :return: array of dictionary of verb-object mappings
+    """
+    return [
+        [get_object_text_section(sentence_graph) for sentence_graph in paragraph_array]
+        for paragraph_array in graphs
+    ]
+
+
+def generate_p1(mappings, file_name="out/p1.csv"):
+    """ generate csv file that satisfies Part 1 of the requirements
+    
+    :param mappings: 2D array of verb-object relationships mappings
+    :param file_name: name of csv file to save
+    :return: csv (csv file corresponding to desired output for Part 1 of the problem)
+    see <https://github.com/ACMWM/Logapps-TribeHacks-Challenge-2017#example-1-part-1-of-the-problem>
+    """
+    with open(file_name, 'w') as csv_file:
+        fieldnames = ["paragraph #", "sentence #", "verb", "object"]
+        writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
+        writer.writeheader()
+
+        for i in range(len(mappings)):
+            for j in range(len(mappings[i])):
+                mapping = mappings[i][j]
+                for verb in mapping:
+                    for object_phrase in reversed(mapping[verb]):
+                        writer.writerow(
+                            {
+                                "paragraph #": str(i + 1),
+                                "sentence #": str(j + 1),
+                                "verb": verb,
+                                "object": object_phrase
+                            }
+                        )
+
+
+def generate_p2(mappings, file_name="out/p2.csv"):
+    """ generate csv file that satisfies Part 2 of the requirements
+    
+    :param mappings: 2D array of verb-object relationships mappings
+    :param file_name: name of csv file to save
+    :return: csv (csv file corresponding to desired output for Part 2 of the problem)
+    see <https://github.com/ACMWM/Logapps-TribeHacks-Challenge-2017#example-1-part-1-of-the-problem>
+    """
+    counts = {}
+    verbs = set()
+    for paragraph_array in mappings:
+        for mapping in paragraph_array:
+            for verb in mapping:
+                for object_phrase in mapping[verb]:
+                    if object_phrase is not None:
+                        if object_phrase not in counts:
+                            counts[object_phrase] = {}
+                        if verb not in counts[object_phrase]:
+                            counts[object_phrase][verb] = 1
+                        else:
+                            counts[object_phrase][verb] += 1
+                        verbs.add(verb)
+
+    fieldnames = [None] + sorted(counts.keys())
+
+    with open(file_name, 'w') as csv_file:
+        writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
+        writer.writeheader()
+        for verb in sorted(verbs):
+            writer.writerow(
+                {
+                    field: (counts[field][verb]
+                            if verb in counts[field] else 0) if field is not None else verb
+                    for field in fieldnames
+                }
+            )
