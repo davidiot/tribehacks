@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
 
-  <title>Phonics</title>
+  <title>Phonics Nouns</title>
   <meta name="description" content="Phonics for Tribehacks">
   <meta name="author" content="SitePoint">
 
@@ -30,7 +30,6 @@
     myData.datasets[0].data = [];
 
     for (var i = 1; i < currentRow.length; i++) {
-      $('#' + firstRow[i].replace(/\s/g,'') + 'NumField').html(currentRow[i]);
       val = parseInt(currentRow[i]);
       if (val > 0) {
         myData.labels.push(firstRow[i]);
@@ -38,10 +37,10 @@
       } 
     }
 
-    $('#tagsInfo').html('<h1>' + 'Selected Verb: ' + '<b>' + currentRow[0] + '</b>'  + '</h1>')
+    $('#tagsInfo').html('<h1>' + 'Selected Noun: ' + '<b>' + currentRow[0] + '</b>'  + '</h1>')
 
     myChart.update();
-    }
+  }
 
   $(document).ready(function(){
     var data;
@@ -53,7 +52,13 @@
       success: function(response)  
       {
       data = $.csv.toArrays(response);
-      generateCanvasList(data);
+      var client = new XMLHttpRequest();
+      client.open('GET', 'data/nouns.txt');
+      client.onreadystatechange = function() {
+        nounsList = client.responseText.replace(/\s/g,'').split(',');
+        generateCanvasList(data, nounsList);
+      }
+      client.send();
       }   
     });
     
@@ -67,35 +72,45 @@
         success: function(response)  
         {
         data = $.csv.toArrays(response);
-        generateCanvasList(data);
+        var client = new XMLHttpRequest();
+        client.open('GET', 'data/nouns.txt');
+        client.onreadystatechange = function() {
+          nounsList = client.responseText.replace(/\s/g,'').split(',');
+          generateCanvasList(data, nounsList);
+          TagCanvas.Reload('myCanvas'); 
+        }
+        client.send();
         }   
       }); 
-      TagCanvas.Reload('myCanvas'); 
     });
 
-    function generateCanvasList(data) {
+    function generateCanvasList(data, nounsList) {
       var text = "<ul>";
 
-      if(typeof(data[0]) === 'undefined') {
+      if(typeof(nounsList[0]) === 'undefined') {
         return null;
       } else {
+        ////////
+        var uniqueNouns = Array.from(new Set(nounsList));
         var firstRow = [];
         $.each(data, function( index, row ) {
+            firstRow.push(row[0]);
+        });
+
+        for(var i = 0; i < uniqueNouns.length; i++) {
+          uniqueNoun = uniqueNouns[i];
+
+        }
+        ////////
+
+        
+
+
+        var firstRow = [];
+        $.each(data, function( index, row ) {
+
           //bind header
-          if (index == 0) {
-            firstRow = row;
-            nounHTML = '<ul>';
-
-            $.each(row, function(iindex, colData) {
-              if (iindex != 0) {
-                nounHTML += '<li hidden="true" id="' + colData.replace(/\s/g,'')  + 'ListField' +'">' + '<span>' + colData + ': ' + '<b><span id=' + '"' + colData.replace(/\s/g,'')  + 'NumField' + '">' + '</span></b>' + '</span></li>';
-              }
-            })
-
-            nounHTML += '</ul>'
-
-            $('#tagsInfo').append(nounHTML);
-          } else {
+          if (index != 0) {
             text += '<li>' + '<a href="#" ' + "onclick='return tpu("+ JSON.stringify(row) + ', ' + JSON.stringify(firstRow) +")'>";
 
             $.each(row, function( index, colData ) {
@@ -115,8 +130,8 @@
       
       try {
           TagCanvas.Start('myCanvas','tags',{
-            textColour: '#ff0000',
-            outlineColour: '#ff00ff',
+            textColour: '#228B22',
+            outlineColour: '#000000',
             reverse: true,
             depth: 0.8,
             maxSpeed: 0.05
@@ -126,16 +141,12 @@
           document.getElementById('myCanvasContainer').style.display = 'none';
         }
     }
-
-    function processTagInfo(event) {
-      console.log(event.data.param);
-    }
     });
   </script>
 </head>
 
 <body>
-  <h1>Phonics Verb to Noun Occurrences</h1>
+  <h1>Phonics Noun to Verb Occurrences</h1>
 
   <div class="container-fluid">
     <div class="row">
